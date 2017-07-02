@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<websettings>
+
+<web_configuration>
+<web_domain></web_domain>
+<web_root></web_root>
+</web_configuration>
+
+<database_configuration>
+<host>127.0.0.1</host>
+<database>rodosite2</database>
+<database_prefix></database_prefix>
+<username>root</username>
+<password>nhkmp3ok</password>
+</database_configuration>
+
+</websettings>

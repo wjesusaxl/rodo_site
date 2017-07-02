@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Test Cliente</title>
+
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/jquery.livequery.js"></script>
+<script src="js/jquery.autocomplete-min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/jquery.cascadingdropdown.js"></script>
+
+<script src="calendario/jquery.ui.core.js"></script>
+<script src="calendario/jquery.ui.widget.js"></script>
+<script src="calendario/jquery.ui.datepicker.js"></script>
+<link rel="stylesheet" href="calendario/demos.css">
+<link rel="stylesheet" href="calendario/base/jquery.ui.all.css">
+        
+<script type="text/javascript">
+		
+function Redireccionar(opcion_key)
+{
+	location.href = "redirect.php?opcion_key=" + opcion_key + "&usr_key=<?php echo $usr_key. "&id_centro&"="&$id_centro;
+}
+
+$(function()
+{
+	$("#nombre_cliente").focus();
+	
+	$url = "procesar_cliente.php?operacion=query2&nombres=";
+	
+	$("#nombre_cliente").autocomplete({
+		source: function (request, response) {
+			$.ajax({
+				url: $url + request.term,
+				dataType: "json",
+				type: "POST",
+				success: function (data) {
+					response($.map( data, function(item) {
+						return{
+							value: item.id,
+							label: item.nombres+ ' '+item.apellidos+'['+item.tipo_documento.substring(0,3)+':'+item.nro_documento+']',
+							nombres: item.nombres,
+							apellidos: item.apellidos							
+						}
+					}))
+				}
+			});
+		},
+		select: function(event, ui) {
+			event.preventDefault();
+			alert(ui.item.value);
+			$("#id_cliente").val(ui.item.value);
+			$("#nombre_cliente").val(ui.item.nombres+" "+ui.item.apellidos);
+		},
+		minLength: 3 
+	});
+	
+	$("#combos")
+	
+});
+			
+</script>
+
+
+<style media="screen" type="text/css">
+
+#main{
+	position: fixed;
+    left: 50%;
+    top: 50%;
+    background-color: white;
+    z-index: 100;
+
+    height: 150px;
+    margin-top: -75px;
+
+    width: 350px;
+    margin-left: -175px;
+}
+
+#cliente_nombre_apellidos{
+	width: 330px;
+	font-family: Impact;
+	font-size: 45px;
+	background: #E0E0E0;
+	text-align: center;
+	text-transform: uppercase;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="main">
+<input type="hidden" id="id_cliente" tabindex="0" />	
+<input type="text" id="nombre_cliente" tabindex="0" />
+
+</div>
+
+<div id="combos">
+	<select class="combo1" name="opcion1">
+		
+	</select>
+	<select class="combo2" name="opcion2">
+		
+	</select>
+	<select class="combo3" name="opcion3">
+		
+	</select>
+</div>
+
+
+
+</body>
+</html>
+
